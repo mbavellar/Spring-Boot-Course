@@ -46,7 +46,13 @@ public class TestConfig implements CommandLineRunner{
     Product p4 = new Product(null, "Xbox series X", "1TB SSD 12 Teraglops", 3999.00, "");
     Product p5 = new Product(null, "Java for Dummies", "Java made easy!", 99.00, "");
     
-    productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+    p1.getCategories().add(cat2);
+    p2.getCategories().addAll(Arrays.asList(cat1, cat3));
+    p3.getCategories().add(cat3);
+    p4.getCategories().add(cat3);
+    p5.getCategories().add(cat2);
+    
+    productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));    
     
     User user1 = new User(null, "Lara Croft", "croft@gmail.com", "(19) 99199-2602", "1234");
     User user2 = new User(null, "John Wick", "wick@gmail.com", "(19) 99199-2602", "1234");
