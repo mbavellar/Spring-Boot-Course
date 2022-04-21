@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.mbavellar.course.entities.Category;
 import com.mbavellar.course.entities.Order;
+import com.mbavellar.course.entities.Product;
 import com.mbavellar.course.entities.User;
 import com.mbavellar.course.entities.enums.OrderStatus;
 import com.mbavellar.course.repositories.CategoryRepository;
 import com.mbavellar.course.repositories.OrderRepository;
+import com.mbavellar.course.repositories.ProductRepository;
 import com.mbavellar.course.repositories.UserRepository;
 
 @Configuration
@@ -26,6 +28,8 @@ public class TestConfig implements CommandLineRunner{
   private OrderRepository orderRepository;
   @Autowired
   private CategoryRepository categoryRepository;
+  @Autowired
+  private ProductRepository productRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -35,6 +39,14 @@ public class TestConfig implements CommandLineRunner{
     Category cat3 = new Category(null, "Computers");
     
     categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+    
+    Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.50, "");
+    Product p2 = new Product(null, "Smart TV", "HDR+ 4K 120Hz LED", 4999.00, "");
+    Product p3 = new Product(null, "MacBook Pro", "500GB SSD, 15\" Retina Display", 14999.00, "");
+    Product p4 = new Product(null, "Xbox series X", "1TB SSD 12 Teraglops", 3999.00, "");
+    Product p5 = new Product(null, "Java for Dummies", "Java made easy!", 99.00, "");
+    
+    productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
     
     User user1 = new User(null, "Lara Croft", "croft@gmail.com", "(19) 99199-2602", "1234");
     User user2 = new User(null, "John Wick", "wick@gmail.com", "(19) 99199-2602", "1234");
