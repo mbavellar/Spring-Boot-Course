@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -99,6 +100,10 @@ public class Order implements Serializable{
 
   public Set<OrderItem> getItems() {
     return items;
+  }
+  
+  public Double getTotal() {
+    return items.stream().map(x -> x.getSubTotal()).collect(Collectors.summingDouble(Double::doubleValue));
   }
 
   @Override
