@@ -2,11 +2,15 @@ package com.mbavellar.course.services;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mbavellar.course.entities.User;
 import com.mbavellar.course.repositories.UserRepository;
+import com.mbavellar.course.resources.exceptions.DatabaseException;
 import com.mbavellar.course.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -28,7 +32,17 @@ public class UserService {
   }
   
   public void delete(Long id) {
-    repository.deleteById(id);
+
+    try {
+      repository.deleteById(id);
+//      repository.findById(id).map(entity -> {repository.deleteById(id);
+//                                return ResponseEntity.ok().build();
+//                                }).orElse(ResponseEntity.notFound().build());
+    } catch (EntityNotFoundException e) {
+      throw new ResourceNotFoundException(id);
+    } catch (DataIntegrityViolationException e) {
+      throw new DatabaseException(e.getMessage());
+    }
   }
   
   public User update(Long id, User obj) {
