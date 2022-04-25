@@ -46,9 +46,14 @@ public class UserService {
   }
   
   public User update(Long id, User obj) {
-    var entity = repository.getById(id);
-    updatedata(entity, obj);
-    return repository.save(entity);
+    
+    try {
+      var entity = repository.getById(id);
+      updatedata(entity, obj);
+      return repository.save(entity);
+    } catch (EntityNotFoundException e) {
+      throw new ResourceNotFoundException(id);
+    }
   }
 
   private void updatedata(User entity, User obj) {
